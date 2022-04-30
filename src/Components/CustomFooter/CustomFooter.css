@@ -1,0 +1,48 @@
+.customFooter{
+color: #fff;
+font-size: 11px;
+text-align: center;
+/* margin-top: 500px !important; */
+position: absolute;
+bottom: 0px;
+width: 100vw;
+
+}
+.footerNavList{
+   padding-left: 0px !important;
+   text-align: center;
+   list-style: none;
+   display: flex; 
+   justify-content: center;
+   align-items: center;
+   flex-wrap: wrap;
+}
+.footerNavList li{
+   font-size: 18px;
+   
+}
+
+.footerNavList li a{
+   text-decoration:  none;
+   color: wheat;
+   padding: 5px;
+   cursor: pointer;
+   
+}
+.footerNavList li a:hover{
+
+   border-bottom: 2px solid rebeccapurple;
+}
+.footerSocial{
+   width: 50px;
+   height: 50px;
+   margin: 5px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   border-radius: 50px;
+   border: 1px solid salmon;
+}
+.copyright{
+   font-size: 15px;
+}

@@ -15,9 +15,7 @@
   transform: scaleY(0);
   transition: all 0.4s;
 }
-.inputfield{
-   /* max-width: 400px; */
-}
+
 .loginContainer {
   background-color: rgb(102, 51, 153);
   transform-origin: top;

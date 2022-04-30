@@ -14,6 +14,7 @@ import Topnavbar from "./Components/Topnavbar/Topnavbar";
 import Authentication from "./Pages/Authentication/Authentication";
 import Inventory from "./Pages/Inventory/Inventory";
 import RequireAuth from "./Pages/Authentication/RequirAuth/RequireAuth";
+import CustomFooter from "./Components/CustomFooter/CustomFooter";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           }
         ></Route>
       </Routes>
+      <CustomFooter />
 
       <ToastContainer />
     </div>
