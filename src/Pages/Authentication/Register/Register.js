@@ -1,10 +1,11 @@
 import React from "react";
 import { Button, Form } from "react-bootstrap";
 import { FcGoogle } from "react-icons/fc";
-import { BsFacebook } from "react-icons/bs";
+import { BsFacebook, BsGithub } from "react-icons/bs";
 import "./Register.css";
 
 const Register = ({ changeAuthUi }) => {
+  const fontStyles = { color: "white", fontSize: "40px" };
   const handelLogin = (event) => {
     event.preventDefault();
 
@@ -47,21 +48,19 @@ const Register = ({ changeAuthUi }) => {
           </p>
           {/* social login */}
           <p>or sign up with:</p>
-          <button type="button" class="btn btn-link btn-floating mx-1">
-            <FcGoogle />
-          </button>
+          <p className="">
+            <button type="button" class="btn btn-link btn-floating mx-1">
+              <FcGoogle style={fontStyles} />
+            </button>
 
-          <button type="button" class="btn btn-link btn-floating mx-1">
-            <BsFacebook />
-          </button>
+            <button type="button" class="btn btn-link btn-floating mx-1">
+              <BsFacebook style={fontStyles} />
+            </button>
 
-          <button type="button" class="btn btn-link btn-floating mx-1">
-            <i class="fab fa-twitter"></i>
-          </button>
-
-          <button type="button" class="btn btn-link btn-floating mx-1">
-            <i class="fab fa-github"></i>
-          </button>
+            <button type="button" class="btn btn-link btn-floating mx-1">
+              <BsGithub style={fontStyles} />
+            </button>
+          </p>
         </Form>
       </div>
     </div>
