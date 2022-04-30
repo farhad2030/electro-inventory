@@ -1,8 +1,12 @@
 import React from "react";
 import { Button, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
+import { FcGoogle } from "react-icons/fc";
+import { BsFacebook, BsGithub } from "react-icons/bs";
 
 const Login = ({ changeAuthUi }) => {
+  const fontStyles = { color: "white", fontSize: "40px" };
+
   const handelLogin = (event) => {
     event.preventDefault();
 
@@ -39,6 +43,21 @@ const Login = ({ changeAuthUi }) => {
           <span className="changeAuthPageLink" onClick={changeAuthUi}>
             Register
           </span>
+        </p>
+        {/* social login */}
+        <p>or sign up with:</p>
+        <p className="">
+          <button type="button" className="btn btn-link btn-floating mx-1">
+            <FcGoogle style={fontStyles} />
+          </button>
+
+          <button type="button" className="btn btn-link btn-floating mx-1">
+            <BsFacebook style={fontStyles} />
+          </button>
+
+          <button type="button" className="btn btn-link btn-floating mx-1">
+            <BsGithub style={fontStyles} />
+          </button>
         </p>
       </Form>
     </div>

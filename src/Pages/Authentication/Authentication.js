@@ -8,7 +8,7 @@ import { useLocation } from "react-router-dom";
 const Authentication = () => {
   const location = useLocation();
 
-  console.log(location);
+  //   console.log(location);
 
   const [Islogin, setIslogin] = useState(false);
   const changeAuthUi = () => {
