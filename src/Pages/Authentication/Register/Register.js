@@ -13,12 +13,14 @@ import {
 
 import "./Register.css";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Register = ({ changeAuthUi }) => {
   // iconstyle
   const fontStyles = { color: "white", fontSize: "40px" };
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathnane || "/";
   //   firebase hook
   const [signInWithGoogle, googleUser, googleLoading, googleError] =
     useSignInWithGoogle(auth);
@@ -34,10 +36,10 @@ const Register = ({ changeAuthUi }) => {
     if (googleError) toast.error(`${googleError}`);
     if (emailError) toast.error(`${emailError}`);
     if (googleUser) {
-      navigate("/");
+      navigate(from, { replace: true });
     }
     if (emailUser) {
-      navigate("/");
+      navigate(from, { replace: true });
     }
   }, [googleUser, googleError, emailError, emailUser]);
 

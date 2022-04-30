@@ -12,6 +12,8 @@ import Register from "./Pages/Authentication/Register/Register";
 import Login from "./Pages/Authentication/Login/Login";
 import Topnavbar from "./Components/Topnavbar/Topnavbar";
 import Authentication from "./Pages/Authentication/Authentication";
+import Inventory from "./Pages/Inventory/Inventory";
+import RequireAuth from "./Pages/Authentication/RequirAuth/RequireAuth";
 
 function App() {
   return (
@@ -25,6 +27,15 @@ function App() {
         <Route
           path="authentication/:state"
           element={<Authentication />}
+        ></Route>
+
+        <Route
+          path="inventory"
+          element={
+            <RequireAuth>
+              <Inventory />
+            </RequireAuth>
+          }
         ></Route>
       </Routes>
 

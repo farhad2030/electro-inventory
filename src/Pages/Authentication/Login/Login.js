@@ -5,12 +5,15 @@ import { FcGoogle } from "react-icons/fc";
 import { BsFacebook, BsGithub } from "react-icons/bs";
 import { useSignInWithGoogle } from "react-firebase-hooks/auth";
 import auth from "../../../firebase.init";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Login = ({ changeAuthUi }) => {
   const fontStyles = { color: "white", fontSize: "40px" };
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
   //   firebase hook
   const [signInWithGoogle, googleUser, googleLoading, googleError] =
     useSignInWithGoogle(auth);
@@ -23,9 +26,8 @@ const Login = ({ changeAuthUi }) => {
   useEffect(() => {
     if (googleError) toast.error(`${googleError}`);
     if (googleUser) {
-      console.log("login google");
       console.log(googleUser);
-      navigate("/");
+      navigate(from, { replace: true });
     }
   }, [googleUser, googleError]);
 
