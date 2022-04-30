@@ -1,8 +1,18 @@
 import React from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { Link } from "react-router-dom";
+import auth from "../../firebase.init";
+import { signOut } from "firebase/auth";
+import { GoSignOut } from "react-icons/go";
 
 const Topnavbar = () => {
+  // firebase hook
+  const [user, loading, error] = useAuthState(auth);
+  const handelSignout = () => {
+    signOut(auth);
+  };
+
   return (
     <Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
@@ -35,21 +45,32 @@ const Topnavbar = () => {
             </NavDropdown>
           </Nav>
           <Nav>
-            <Nav.Link
-              as={Link}
-              to="/authentication/login"
-              state={{ Islogin: true }}
-            >
-              Login
-            </Nav.Link>
-            <Nav.Link
-              eventKey={2}
-              as={Link}
-              to="/authentication/register"
-              state={{ Islogin: false }}
-            >
-              Signup
-            </Nav.Link>
+            {!user ? (
+              <>
+                <Nav.Link
+                  as={Link}
+                  to="/authentication/login"
+                  state={{ Islogin: true }}
+                >
+                  Login
+                </Nav.Link>
+                <Nav.Link
+                  eventKey={2}
+                  as={Link}
+                  to="/authentication/register"
+                  state={{ Islogin: false }}
+                >
+                  Signup
+                </Nav.Link>
+              </>
+            ) : (
+              <>
+                <Nav.Link>{user ? user.displayName : "not fount"}</Nav.Link>
+                <Nav.Link onClick={handelSignout}>
+                  Signout <GoSignOut />
+                </Nav.Link>
+              </>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>

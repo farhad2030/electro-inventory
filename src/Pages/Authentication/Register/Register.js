@@ -6,7 +6,10 @@ import { BsFacebook, BsGithub } from "react-icons/bs";
 
 // auth and firebase hook
 import auth from "../../../firebase.init";
-import { useSignInWithGoogle } from "react-firebase-hooks/auth";
+import {
+  useCreateUserWithEmailAndPassword,
+  useSignInWithGoogle,
+} from "react-firebase-hooks/auth";
 
 import "./Register.css";
 import { toast } from "react-toastify";
@@ -19,6 +22,8 @@ const Register = ({ changeAuthUi }) => {
   //   firebase hook
   const [signInWithGoogle, googleUser, googleLoading, googleError] =
     useSignInWithGoogle(auth);
+  const [createUserWithEmailAndPassword, emailUser, emailLoading, emailError] =
+    useCreateUserWithEmailAndPassword(auth);
 
   //  handel google login
   const handelgooglelogin = async () => {
@@ -27,31 +32,48 @@ const Register = ({ changeAuthUi }) => {
 
   useEffect(() => {
     if (googleError) toast.error(`${googleError}`);
+    if (emailError) toast.error(`${emailError}`);
     if (googleUser) {
-      console.log("login google");
-      console.log(googleUser);
       navigate("/");
     }
-  }, [googleUser, googleError]);
+    if (emailUser) {
+      navigate("/");
+    }
+  }, [googleUser, googleError, emailError, emailUser]);
 
   // handel submit
-  const handelLogin = (event) => {
+  const handelRegister = (event) => {
     event.preventDefault();
+    const formData = new FormData(event.target);
+    const formDataObj = Object.fromEntries(formData.entries());
+    console.log(formDataObj);
+
+    createUserWithEmailAndPassword(formDataObj.email, formDataObj.password);
   };
+
   return (
     <div>
       <div className="container d-flex justify-content-center align-item-center">
         <Form
           className="d-flex flex-column align-items-center "
-          onSubmit={handelLogin}
+          onSubmit={handelRegister}
         >
           <h1 className="py-3 color-white">Register</h1>
 
           <Form.Group className="mb-3 inputfield ">
-            <Form.Control className="" type="email" placeholder="Enter email" />
+            <Form.Control
+              className=""
+              type="email"
+              name="email"
+              placeholder="Enter email"
+            />
           </Form.Group>
           <Form.Group className="mb-3 inputfield">
-            <Form.Control type="password" placeholder="Password" />
+            <Form.Control
+              type="password"
+              name="password"
+              placeholder="Password"
+            />
           </Form.Group>
 
           <Button variant="primary" type="submit">
