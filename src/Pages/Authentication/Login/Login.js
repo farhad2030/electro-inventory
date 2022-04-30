@@ -1,0 +1,48 @@
+import React from "react";
+import { Button, Form } from "react-bootstrap";
+import { toast } from "react-toastify";
+
+const Login = ({ changeAuthUi }) => {
+  const handelLogin = (event) => {
+    event.preventDefault();
+
+    //  toast.info("🦄 Wow so easy!", {
+    //    position: "top-right",
+    //    autoClose: 5000,
+    //    hideProgressBar: true,
+    //    closeOnClick: true,
+    //    pauseOnHover: true,
+    //    draggable: true,
+    //    progress: undefined,
+    //  });
+  };
+  return (
+    <div className="container">
+      <Form
+        className="d-flex flex-column align-items-center "
+        onSubmit={handelLogin}
+      >
+        <h1 className="py-3 color-white">Login</h1>
+        <Form.Group className="mb-3 inputfield">
+          <Form.Control type="email" placeholder="Enter email" />
+        </Form.Group>
+
+        <Form.Group className="mb-3 inputfield">
+          <Form.Control type="password" placeholder="Password" />
+        </Form.Group>
+
+        <Button variant="primary" type="submit">
+          Login
+        </Button>
+        <p className="my-3">
+          Dont have an account , Please{" "}
+          <span className="changeAuthPageLink" onClick={changeAuthUi}>
+            Register
+          </span>
+        </p>
+      </Form>
+    </div>
+  );
+};
+
+export default Login;
