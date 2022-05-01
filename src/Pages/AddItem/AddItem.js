@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 import { Form, Button } from "react-bootstrap";
 
@@ -8,6 +9,14 @@ const AddItem = () => {
     const formData = new FormData(event.target);
     const formDataObj = Object.fromEntries(formData.entries());
     console.log(formDataObj);
+    axios
+      .post("http://localhost:5000/addInventory", formDataObj)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   return (
     <div className="mt-5 pt-3">
