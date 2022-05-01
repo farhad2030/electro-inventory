@@ -2,10 +2,8 @@
 color: #fff;
 font-size: 11px;
 text-align: center;
-/* margin-top: 500px !important; */
-position: absolute;
-bottom: 0px;
 width: 100vw;
+margin:0px !important;
 
 }
 .footerNavList{

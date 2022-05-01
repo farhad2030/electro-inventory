@@ -15,6 +15,7 @@ import Authentication from "./Pages/Authentication/Authentication";
 import Inventory from "./Pages/Inventory/Inventory";
 import RequireAuth from "./Pages/Authentication/RequirAuth/RequireAuth";
 import CustomFooter from "./Components/CustomFooter/CustomFooter";
+import AddItem from "./Pages/AddItem/AddItem";
 
 function App() {
   return (
@@ -38,9 +39,17 @@ function App() {
             </RequireAuth>
           }
         ></Route>
+        <Route
+          path="addItem"
+          element={
+            <RequireAuth>
+              <AddItem />
+            </RequireAuth>
+          }
+        ></Route>
       </Routes>
-      <CustomFooter />
 
+      <CustomFooter />
       <ToastContainer />
     </div>
   );

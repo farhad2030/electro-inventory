@@ -28,6 +28,9 @@ const Topnavbar = () => {
             <Nav.Link as={Link} to="inventory">
               Inventory
             </Nav.Link>
+            <Nav.Link as={Link} to="addItem">
+              Add Item
+            </Nav.Link>
           </Nav>
           <Nav>
             {!user ? (

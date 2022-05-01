@@ -4,7 +4,7 @@ import Topnavbar from "../../Components/Topnavbar/Topnavbar";
 const Home = () => {
   return (
     <div>
-      <Topnavbar />
+      <img style={{ width: "100vw" }} src="hero.png" />
     </div>
   );
 };
