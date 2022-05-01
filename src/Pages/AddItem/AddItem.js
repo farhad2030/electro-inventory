@@ -13,6 +13,9 @@ const AddItem = () => {
       .post("http://localhost:5000/addInventory", formDataObj)
       .then((res) => {
         console.log(res);
+        if (res.data.acknowledged) {
+          event.target.reset();
+        }
       })
       .catch((error) => {
         console.log(error);

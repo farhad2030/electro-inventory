@@ -1,3 +1,8 @@
+# github
+
+client:https://github.com/ProgrammingHeroWC4/warehouse-management-client-side-farhad2030
+server:https://github.com/ProgrammingHeroWC4/warehouse-management-server-side-farhad2030
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
