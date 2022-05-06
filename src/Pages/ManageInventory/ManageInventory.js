@@ -16,8 +16,9 @@ const ManageInventory = () => {
       });
   }, []);
   const handelDelete = (id) => {
+    console.log(id);
     axios
-      .delete(`http://localhost:5000/deleteinventory`, { id })
+      .delete(`http://localhost:5000/deleteinventory`, { data: { id: id } })
       .then((res) => {
         console.log(res);
       })
