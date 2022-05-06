@@ -1,25 +1,75 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 const AddItem = () => {
+  // useLocation
+  const location = useLocation();
+  const path = location?.state?.path;
+  const id = location?.state?.id;
+
+  //
+  const [inventory, setinventory] = useState([]);
+
+  useEffect(() => {
+    if (id) {
+      axios
+        .get(`http://localhost:5000/inventory/${id}`)
+        .then((res) => {
+          console.log(res.data);
+          setinventory(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, []);
+
   const handelAddItem = (event) => {
     event.preventDefault();
 
     const formData = new FormData(event.target);
     const formDataObj = Object.fromEntries(formData.entries());
     console.log(formDataObj);
-    axios
-      .post("http://localhost:5000/addInventory", formDataObj)
-      .then((res) => {
-        console.log(res);
-        if (res.data.acknowledged) {
-          // event.target.reset();
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+
+    if (path === "editInventory") {
+      axios
+        .put(`http://localhost:5000/updateInventory/${id}`, formDataObj)
+        .then((res) => {
+          // console.log(res);
+          if (res.statusText == "OK") {
+            toast("Data is updated");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else
+      axios
+        .post("http://localhost:5000/addInventory", formDataObj)
+        .then((res) => {
+          console.log(res);
+          if (res.data.acknowledged) {
+            // event.target.reset();
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+  };
+  const handelInput = (event) => {
+    const value = event.target.value;
+    const name = event.target.name;
+    // console.log(name);
+    const item = { [name]: value };
+    console.log(item);
+
+    const updateInventory = { ...inventory, [name]: value };
+
+    // console.log(updateInventory);
+    setinventory(updateInventory);
   };
   return (
     <div className="mt-5 pt-3">
@@ -27,43 +77,85 @@ const AddItem = () => {
         className="my-5 w-75 mx-auto rounded border border-3 p-3"
         onSubmit={handelAddItem}
       >
-        <h1 className="py-4">Add Item</h1>
+        <h1 className="py-4">
+          {path === "editInventory" ? "Edit inventory" : "Add Item"}
+        </h1>
 
         <Form.Group className="mb-3 inputfield">
-          <Form.Control type="text" name="name" placeholder="Name" />
+          <Form.Control
+            type="text"
+            name="name"
+            value={inventory?.name || ""}
+            onChange={handelInput}
+            placeholder="Name"
+          />
         </Form.Group>
         <Form.Group className="mb-3 inputfield">
-          <Form.Control type="text" name="image" placeholder="Image link" />
+          <Form.Control
+            type="text"
+            name="image"
+            placeholder="Image link"
+            value={inventory?.image || ""}
+            onChange={handelInput}
+          />
         </Form.Group>
         <Form.Group className="mb-3 inputfield">
           <Form.Control
             type="text"
             name="description"
             placeholder="Description"
+            value={inventory?.description || ""}
+            onChange={handelInput}
           />
         </Form.Group>
         <Form.Group className="mb-3 inputfield">
-          <Form.Control type="text" name="price" placeholder="price" />
+          <Form.Control
+            type="text"
+            name="price"
+            placeholder="price"
+            value={inventory?.price || ""}
+            onChange={handelInput}
+          />
         </Form.Group>
         <Form.Group className="mb-3 inputfield">
-          <Form.Control type="number" name="quantity" placeholder="Quantity" />
+          <Form.Control
+            type="number"
+            name="quantity"
+            placeholder="Quantity"
+            value={inventory?.quantity || ""}
+            onChange={handelInput}
+          />
         </Form.Group>
         <Form.Group className="mb-3 inputfield">
           <Form.Control
             type="text"
             name="supplierName"
             placeholder="Supplier Name"
+            value={inventory?.supplierName || ""}
+            onChange={handelInput}
           />
         </Form.Group>
         <Form.Group className="mb-3 inputfield">
-          <Form.Control type="text" name="brand" placeholder="Brand" />
+          <Form.Control
+            type="text"
+            name="brand"
+            placeholder="Brand"
+            value={inventory?.brand || ""}
+            onChange={handelInput}
+          />
         </Form.Group>
         <Form.Group className="mb-3 inputfield">
-          <Form.Control type="text" name="sold" placeholder="Sold" />
+          <Form.Control
+            type="text"
+            name="sold"
+            placeholder="Sold"
+            value={inventory?.sold || ""}
+            onChange={handelInput}
+          />
         </Form.Group>
 
         <Button variant="primary" type="submit">
-          Add Item
+          {path === "editInventory" ? "Edit Item" : "Add Item"}
         </Button>
       </Form>
     </div>

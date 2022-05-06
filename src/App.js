@@ -56,6 +56,14 @@ function App() {
             </RequireAuth>
           }
         ></Route>
+        <Route
+          path="editInventory"
+          element={
+            <RequireAuth>
+              <AddItem />
+            </RequireAuth>
+          }
+        ></Route>
       </Routes>
 
       <CustomFooter />
