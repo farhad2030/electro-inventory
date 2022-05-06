@@ -14,7 +14,7 @@ const AddItem = () => {
       .then((res) => {
         console.log(res);
         if (res.data.acknowledged) {
-          event.target.reset();
+          // event.target.reset();
         }
       })
       .catch((error) => {

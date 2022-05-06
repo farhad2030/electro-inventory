@@ -1,9 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const ManageInventory = () => {
   const [inventory, setinventory] = useState([]);
-
+  const [remainInventory, setremainInventory] = useState([]);
   useEffect(() => {
     axios
       .get(`http://localhost:5000/inventory`)
@@ -14,17 +15,23 @@ const ManageInventory = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
-  const handelDelete = (id) => {
+  }, [remainInventory]);
+  const handelDelete = (id, name) => {
     console.log(id);
-    axios
-      .delete(`http://localhost:5000/deleteinventory`, { data: { id: id } })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const proceed = window.confirm(`Are you sure to delete ${name}`);
+
+    if (proceed) {
+      axios
+        .delete(`http://localhost:5000/deleteinventory/${id}`)
+        .then((res) => {
+          console.log(res);
+          const remaining = inventory.filter((item) => item._id !== id);
+          setremainInventory(remaining);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   return (
@@ -36,7 +43,7 @@ const ManageInventory = () => {
             {item.name}{" "}
             <span
               onClick={() => {
-                handelDelete(item._id);
+                handelDelete(item._id, item.name);
               }}
             >
               Delete
