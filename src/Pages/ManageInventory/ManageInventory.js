@@ -85,6 +85,25 @@ const ManageInventory = () => {
         });
     }
   };
+
+  // deliver quantity
+  const deliverHandeler = (item) => {
+    const newQuantity = parseInt(item.quantity) - 1;
+    if (parseInt(item.quantity) > 0) {
+      console.log("in update");
+      axios
+        .put(`http://localhost:5000/updateRestock/${item._id}`, {
+          quantity: newQuantity,
+        })
+        .then((res) => {
+          console.log(res);
+          setupdateCount(updateCount + 1);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
   return (
     <div className="container">
       <div className="mt-5">
@@ -145,7 +164,14 @@ const ManageInventory = () => {
                   >
                     Edit
                   </td>
-                  <td style={{ cursor: "pointer" }}>Delivered</td>
+                  <td
+                    onClick={() => {
+                      deliverHandeler(item);
+                    }}
+                    style={{ cursor: "pointer" }}
+                  >
+                    Delivered
+                  </td>
                   <td style={{ cursor: "pointer" }}>
                     <form onSubmit={handelRestock(item)}>
                       <div className="input-group mb-3">
