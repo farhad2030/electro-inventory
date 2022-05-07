@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
+import { useAuthState } from "react-firebase-hooks/auth";
+import auth from "../../firebase.init";
 
 const AddItem = () => {
   // useLocation
@@ -12,6 +14,9 @@ const AddItem = () => {
 
   //
   const [inventory, setinventory] = useState([]);
+
+  // react-firebase-hook
+  const [user, loading] = useAuthState(auth);
 
   useEffect(() => {
     if (id) {
@@ -34,30 +39,34 @@ const AddItem = () => {
     const formDataObj = Object.fromEntries(formData.entries());
     console.log(formDataObj);
 
-    if (path === "editInventory") {
-      axios
-        .put(`http://localhost:5000/updateInventory/${id}`, formDataObj)
-        .then((res) => {
-          // console.log(res);
-          if (res.statusText == "OK") {
-            toast("Data is updated");
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else
-      axios
-        .post("http://localhost:5000/addInventory", formDataObj)
-        .then((res) => {
-          console.log(res);
-          if (res.data.acknowledged) {
-            // event.target.reset();
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    if (!loading) {
+      const addData = { ...formDataObj, email: user.email };
+
+      if (path === "editInventory") {
+        axios
+          .put(`http://localhost:5000/updateInventory/${id}`, addData)
+          .then((res) => {
+            // console.log(res);
+            if (res.statusText == "OK") {
+              toast("Data is updated");
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else
+        axios
+          .post("http://localhost:5000/addInventory", formDataObj)
+          .then((res) => {
+            console.log(res);
+            if (res.data.acknowledged) {
+              // event.target.reset();
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    }
   };
   const handelInput = (event) => {
     const value = event.target.value;

@@ -4,7 +4,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { Link } from "react-router-dom";
 import auth from "../../firebase.init";
 import { signOut } from "firebase/auth";
-import { GoSignOut } from "react-icons/go";
+import { BiLogOutCircle } from "react-icons/bi";
 
 const Topnavbar = () => {
   // firebase hook
@@ -12,6 +12,7 @@ const Topnavbar = () => {
   const handelSignout = () => {
     signOut(auth);
   };
+  console.log(user?.photoURL);
 
   return (
     <Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -28,9 +29,22 @@ const Topnavbar = () => {
             <Nav.Link as={Link} to="inventory">
               Inventory
             </Nav.Link>
-            <Nav.Link as={Link} to="addItem">
-              Add Item
-            </Nav.Link>
+
+            {user ? (
+              <>
+                <Nav.Link as={Link} to="addItem">
+                  Add Item
+                </Nav.Link>
+                <Nav.Link as={Link} to="inventory">
+                  All Items
+                </Nav.Link>
+                <Nav.Link as={Link} to="inventory" state={{ from: "myItems" }}>
+                  My Items
+                </Nav.Link>
+              </>
+            ) : (
+              ""
+            )}
           </Nav>
           <Nav>
             {!user ? (
@@ -53,9 +67,16 @@ const Topnavbar = () => {
               </>
             ) : (
               <>
-                <Nav.Link>{user ? user.displayName : "not fount"}</Nav.Link>
+                <Nav.Link>
+                  {user ? user.displayName : "not fount"}{" "}
+                  <img
+                    src={user?.photoURL}
+                    style={{ width: "20px", borderRadius: "10px" }}
+                    alt="userImg"
+                  />
+                </Nav.Link>
                 <Nav.Link onClick={handelSignout}>
-                  Signout <GoSignOut />
+                  Signout <BiLogOutCircle />
                 </Nav.Link>
               </>
             )}

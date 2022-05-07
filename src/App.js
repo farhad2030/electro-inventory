@@ -16,6 +16,7 @@ import Inventory from "./Pages/Inventory/Inventory";
 import RequireAuth from "./Pages/Authentication/RequirAuth/RequireAuth";
 import CustomFooter from "./Components/CustomFooter/CustomFooter";
 import AddItem from "./Pages/AddItem/AddItem";
+import AllInventory from "./Pages/AllInventory/AllInventory";
 import ManageInventory from "./Pages/ManageInventory/ManageInventory";
 
 function App() {
@@ -25,21 +26,17 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="home" element={<Home />}></Route>
+        <Route path="inventory" element={<Inventory />}></Route>
+
         <Route path="register" element={<Register />}></Route>
         <Route path="login" element={<Login />}></Route>
+
         <Route
           path="authentication/:state"
           element={<Authentication />}
         ></Route>
 
-        <Route
-          path="inventory"
-          element={
-            <RequireAuth>
-              <Inventory />
-            </RequireAuth>
-          }
-        ></Route>
+        <Route path="inventory" element={<Inventory />}></Route>
         <Route
           path="addItem"
           element={
@@ -49,7 +46,7 @@ function App() {
           }
         ></Route>
         <Route
-          path="manageInventory"
+          path="manageInventory/:id"
           element={
             <RequireAuth>
               <ManageInventory />

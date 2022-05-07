@@ -36,7 +36,7 @@ const InventorySectio = () => {
                       className="btn btn-primary m-3"
                       style={{ cursor: "pointer" }}
                       onClick={() => {
-                        navigate("/editInventory", {
+                        navigate(`/manageInventory/${item._id}`, {
                           state: { path: "editInventory", id: item._id },
                         });
                       }}
@@ -50,7 +50,7 @@ const InventorySectio = () => {
           })}
         </div>
 
-        <Link to="manageInventory">Manage Inventories</Link>
+        <Link to="inventory">Manage Inventories</Link>
       </div>
     </div>
   );
