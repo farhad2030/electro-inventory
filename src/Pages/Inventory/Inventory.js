@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 //icons
@@ -13,7 +13,7 @@ const Inventory = () => {
   // react-router-dom
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location);
+  // console.log(location);
 
   // react-firebase-hook
   const [user, loading, error] = useAuthState(auth);
@@ -50,19 +50,25 @@ const Inventory = () => {
   // delete inventory
   const handelDelete = (id, name) => {
     console.log(id);
-    const proceed = window.confirm(`Are you sure to delete ${name}`);
-
-    if (proceed) {
-      axios
-        .delete(`http://localhost:5000/deleteinventory/${id}`)
-        .then((res) => {
-          console.log(res);
-          const remaining = inventory.filter((item) => item._id !== id);
-          setremainInventory(remaining);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    if (user) {
+      const proceed = window.confirm(`Are you sure to delete ${name}`);
+      if (proceed) {
+        axios
+          .delete(`http://localhost:5000/deleteinventory/${id}`)
+          .then((res) => {
+            console.log(res);
+            const remaining = inventory.filter((item) => item._id !== id);
+            setremainInventory(remaining);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    } else {
+      navigate("/authentication/login", {
+        state: { from: location, Islogin: true },
+        replace: true,
+      });
     }
   };
 

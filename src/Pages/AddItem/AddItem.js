@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Toast } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
@@ -39,7 +39,7 @@ const AddItem = () => {
     const formDataObj = Object.fromEntries(formData.entries());
     console.log(formDataObj);
 
-    if (!loading) {
+    if (!loading && user) {
       const addData = { ...formDataObj, email: user.email };
 
       if (path === "editInventory") {
@@ -54,9 +54,9 @@ const AddItem = () => {
           .catch((error) => {
             console.log(error);
           });
-      } else
+      } else {
         axios
-          .post("http://localhost:5000/addInventory", formDataObj)
+          .post("http://localhost:5000/addInventory", addData)
           .then((res) => {
             console.log(res);
             if (res.data.acknowledged) {
@@ -66,6 +66,9 @@ const AddItem = () => {
           .catch((error) => {
             console.log(error);
           });
+      }
+    } else {
+      toast("Not add");
     }
   };
   const handelInput = (event) => {

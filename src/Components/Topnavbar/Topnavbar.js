@@ -23,8 +23,8 @@ const Topnavbar = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link as={Link} to="#features">
-              Features
+            <Nav.Link as={Link} to="blog">
+              Blog
             </Nav.Link>
             <Nav.Link as={Link} to="inventory">
               Inventory
@@ -35,9 +35,7 @@ const Topnavbar = () => {
                 <Nav.Link as={Link} to="addItem">
                   Add Item
                 </Nav.Link>
-                <Nav.Link as={Link} to="inventory">
-                  All Items
-                </Nav.Link>
+
                 <Nav.Link as={Link} to="inventory" state={{ from: "myItems" }}>
                   My Items
                 </Nav.Link>
