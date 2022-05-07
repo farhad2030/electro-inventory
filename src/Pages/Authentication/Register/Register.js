@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 // icon
 import { FcGoogle } from "react-icons/fc";
@@ -9,6 +9,7 @@ import auth from "../../../firebase.init";
 import {
   useCreateUserWithEmailAndPassword,
   useSignInWithGoogle,
+  useUpdateProfile,
 } from "react-firebase-hooks/auth";
 
 import "./Register.css";
@@ -18,14 +19,20 @@ import { useLocation, useNavigate } from "react-router-dom";
 const Register = ({ changeAuthUi }) => {
   // iconstyle
   const fontStyles = { color: "white", fontSize: "40px" };
+
+  // react-router -hook
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathnane || "/";
+
   //   firebase hook
   const [signInWithGoogle, googleUser, googleLoading, googleError] =
     useSignInWithGoogle(auth);
   const [createUserWithEmailAndPassword, emailUser, emailLoading, emailError] =
     useCreateUserWithEmailAndPassword(auth);
+  const [updateProfile, updating, updateError] = useUpdateProfile(auth);
+
+  const [displayName, setdisplayName] = useState("");
 
   //  handel google login
   const handelgooglelogin = async () => {
@@ -35,22 +42,36 @@ const Register = ({ changeAuthUi }) => {
   useEffect(() => {
     if (googleError) toast.error(`${googleError}`);
     if (emailError) toast.error(`${emailError}`);
+    if (updateError) toast.error(`${updateError}`);
     if (googleUser) {
       navigate(from, { replace: true });
     }
     if (emailUser) {
-      navigate(from, { replace: true });
+      const updateProfileHandeler = async () => {
+        await updateProfile({ displayName });
+
+        navigate(from, { replace: true });
+      };
+      updateProfileHandeler();
     }
-  }, [googleUser, googleError, emailError, emailUser]);
+  }, [googleUser, googleError, emailError, emailUser, updateError]);
 
   // handel submit
-  const handelRegister = (event) => {
+  const handelRegister = async (event) => {
     event.preventDefault();
+
     const formData = new FormData(event.target);
     const formDataObj = Object.fromEntries(formData.entries());
-    console.log(formDataObj);
+    setdisplayName(formDataObj.name);
+    const name = formDataObj.name;
+    console.log(formDataObj, name);
 
-    createUserWithEmailAndPassword(formDataObj.email, formDataObj.password);
+    await createUserWithEmailAndPassword(
+      formDataObj.email,
+      formDataObj.password
+    );
+
+    console.log(emailError);
   };
 
   return (
@@ -62,6 +83,14 @@ const Register = ({ changeAuthUi }) => {
         >
           <h1 className="py-3 color-white">Register</h1>
 
+          <Form.Group className="mb-3 inputfield ">
+            <Form.Control
+              className=""
+              type="text"
+              name="name"
+              placeholder="Enter Name"
+            />
+          </Form.Group>
           <Form.Group className="mb-3 inputfield ">
             <Form.Control
               className=""

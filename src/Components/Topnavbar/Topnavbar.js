@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link } from "react-router-dom";
@@ -9,10 +9,15 @@ import { BiLogOutCircle } from "react-icons/bi";
 const Topnavbar = () => {
   // firebase hook
   const [user, loading, error] = useAuthState(auth);
+
+  const [displayName, setdisplayName] = useState("");
   const handelSignout = () => {
     signOut(auth);
   };
-  console.log(user?.photoURL);
+  console.log(user);
+  useEffect(() => {
+    setdisplayName([user?.displayName]);
+  }, [loading]);
 
   return (
     <Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -66,7 +71,7 @@ const Topnavbar = () => {
             ) : (
               <>
                 <Nav.Link>
-                  {user ? user.displayName : "not fount"}{" "}
+                  {user ? displayName : "not fount"}{" "}
                   <img
                     src={user?.photoURL}
                     style={{ width: "20px", borderRadius: "10px" }}

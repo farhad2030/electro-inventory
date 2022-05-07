@@ -18,6 +18,8 @@ import CustomFooter from "./Components/CustomFooter/CustomFooter";
 import AddItem from "./Pages/AddItem/AddItem";
 import AllInventory from "./Pages/AllInventory/AllInventory";
 import ManageInventory from "./Pages/ManageInventory/ManageInventory";
+import Blog from "./Pages/Blog/Blog";
+import NotFound from "./Pages/NotFound/NotFound";
 
 function App() {
   return (
@@ -26,6 +28,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="home" element={<Home />}></Route>
+        <Route path="blog" element={<Blog />}></Route>
         <Route path="inventory" element={<Inventory />}></Route>
 
         <Route path="register" element={<Register />}></Route>
@@ -61,6 +64,8 @@ function App() {
             </RequireAuth>
           }
         ></Route>
+
+        <Route path="*" element={<NotFound />}></Route>
       </Routes>
 
       <CustomFooter />

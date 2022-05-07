@@ -3,7 +3,10 @@ import { Button, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { FcGoogle } from "react-icons/fc";
 import { BsFacebook, BsGithub } from "react-icons/bs";
-import { useSignInWithGoogle } from "react-firebase-hooks/auth";
+import {
+  useSignInWithEmailAndPassword,
+  useSignInWithGoogle,
+} from "react-firebase-hooks/auth";
 import auth from "../../../firebase.init";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -17,6 +20,8 @@ const Login = ({ changeAuthUi }) => {
   //   firebase hook
   const [signInWithGoogle, googleUser, googleLoading, googleError] =
     useSignInWithGoogle(auth);
+  const [signInWithEmailAndPassword, emailUser, emailLoading, emailError] =
+    useSignInWithEmailAndPassword(auth);
 
   //  handel google login
   const handelgooglelogin = async () => {
@@ -25,17 +30,19 @@ const Login = ({ changeAuthUi }) => {
 
   useEffect(() => {
     if (googleError) toast.error(`${googleError}`);
-    if (googleUser) {
+    if (emailError) toast.error(`${emailError}`);
+    if (googleUser || emailUser) {
       console.log(googleUser);
       navigate(from, { replace: true });
     }
-  }, [googleUser, googleError]);
+  }, [googleUser, googleError, emailError, emailUser]);
 
   const handelLogin = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const formDataObj = Object.fromEntries(formData.entries());
     console.log(formDataObj);
+    signInWithEmailAndPassword(formDataObj.email, formDataObj.password);
   };
   return (
     <div className="container">
