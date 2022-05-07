@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const InventorySectio = () => {
+  const navigate = useNavigate();
   const [inventory, setinventory] = useState([]);
   useEffect(() => {
     axios
@@ -16,13 +17,41 @@ const InventorySectio = () => {
       });
   }, []);
   return (
-    <div className="mt-5">
-      <h1>Inventory</h1>
-      {inventory.map((item) => {
-        return <p key={item._id}>{item.name}</p>;
-      })}
+    <div className="container">
+      <div className="mt-5">
+        <h1>Inventory</h1>
+        <div className="row">
+          {inventory.map((item) => {
+            return (
+              <div key={item._id} className="col-12 col-md-6 col-lg-3  ">
+                <div className="border p-3 rounded ">
+                  <h6>{item.name}</h6>
+                  <p>{item.description}</p>
+                  <img src={item.image} style={{ width: "150px" }} />
 
-      <Link to="manageInventory">Manage Inventories</Link>
+                  <p> Quantity : {item.quantity}</p>
+                  <p> Supplier : {item.supplierName}</p>
+                  <p>
+                    <button
+                      className="btn btn-primary m-3"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        navigate("/editInventory", {
+                          state: { path: "editInventory", id: item._id },
+                        });
+                      }}
+                    >
+                      Edit Inventory
+                    </button>
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <Link to="manageInventory">Manage Inventories</Link>
+      </div>
     </div>
   );
 };
