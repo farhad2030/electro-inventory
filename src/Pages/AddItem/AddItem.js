@@ -40,11 +40,9 @@ const AddItem = () => {
     console.log(formDataObj);
 
     if (!loading && user) {
-      const addData = { ...formDataObj, email: user.email };
-
       if (path === "editInventory") {
         axios
-          .put(`http://localhost:5000/updateInventory/${id}`, addData)
+          .put(`http://localhost:5000/updateInventory/${id}`, formDataObj)
           .then((res) => {
             // console.log(res);
             if (res.statusText == "OK") {
@@ -55,6 +53,7 @@ const AddItem = () => {
             console.log(error);
           });
       } else {
+        const addData = { ...formDataObj, email: user.email };
         axios
           .post("http://localhost:5000/addInventory", addData)
           .then((res) => {
