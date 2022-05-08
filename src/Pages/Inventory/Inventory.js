@@ -31,9 +31,9 @@ const Inventory = () => {
       console.log({ email: user?.email });
       let url;
       if (location.state?.from == "myItems") {
-        url = `http://localhost:5000/inventory?email=${user?.email}`;
+        url = `https://radiant-inlet-16077.herokuapp.com/inventory?email=${user?.email}`;
       } else {
-        url = `http://localhost:5000/inventory`;
+        url = `https://radiant-inlet-16077.herokuapp.com/inventory`;
       }
       axios
         .get(url)
@@ -54,7 +54,9 @@ const Inventory = () => {
       const proceed = window.confirm(`Are you sure to delete ${name}`);
       if (proceed) {
         axios
-          .delete(`http://localhost:5000/deleteinventory/${id}`)
+          .delete(
+            `https://radiant-inlet-16077.herokuapp.com/deleteinventory/${id}`
+          )
           .then((res) => {
             console.log(res);
             const remaining = inventory.filter((item) => item._id !== id);

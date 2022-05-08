@@ -45,7 +45,10 @@ const Login = ({ changeAuthUi }) => {
     console.log(formDataObj);
     await signInWithEmailAndPassword(formDataObj.email, formDataObj.password);
     const email = formDataObj.email;
-    const { data } = await axios.post("http://localhost:5000/login", { email });
+    const { data } = await axios.post(
+      "https://radiant-inlet-16077.herokuapp.com/login",
+      { email }
+    );
     localStorage.setItem("accessToken", data.accessToken);
 
     navigate(from, { replace: true });
