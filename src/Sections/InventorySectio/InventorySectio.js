@@ -57,15 +57,11 @@ const InventorySectio = () => {
             </div>
           )}
 
-          {inventory.length > 6 ? (
-            <div className="col-12 col-md-6 col-lg-3 my-auto ">
-              <Link class="btn btn-info " to="inventory">
-                All Inventories
-              </Link>
-            </div>
-          ) : (
-            ""
-          )}
+          <div className="col-12 col-md-6 col-lg-3 my-auto ">
+            <Link class="btn btn-info " to="inventory">
+              All Inventories
+            </Link>
+          </div>
         </div>
       </div>
     </div>
