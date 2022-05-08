@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useAuthState } from "react-firebase-hooks/auth";
+import auth from "../../firebase.init";
+import { signOut } from "firebase/auth";
 
 const ManageInventory = () => {
   const [inventory, setinventory] = useState();
@@ -8,20 +11,43 @@ const ManageInventory = () => {
   // react-router-dom
   const params = useParams();
   const id = params.id;
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const [user, loading, error] = useAuthState(auth);
 
   // for useEffect
   const [updateCount, setupdateCount] = useState(0);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:5000/inventory/${id}`)
-      .then((res) => {
-        console.log(res.data);
-        setinventory(res.data);
-      })
-      .catch((error) => {
+    const getInventory = async () => {
+      try {
+        const token = localStorage.getItem("accessToken");
+        console.log(token);
+        const email = user?.email;
+
+        const { data } = await axios.get(
+          `http://localhost:5000/inventory/${id}?email=${email}`,
+          {
+            headers: {
+              authorization: `bearer ${token}`,
+            },
+          }
+        );
+        console.log(data);
+        setinventory(data);
+      } catch (error) {
         console.log(error);
-      });
+        if (error.response.status === 401 || error.response.status === 403) {
+          signOut(auth);
+          navigate("/authentication/login", {
+            state: { from: location, Islogin: true },
+            replace: true,
+          });
+        }
+      }
+    };
+    getInventory();
   }, [updateCount]);
 
   // handel restock
@@ -56,21 +82,27 @@ const ManageInventory = () => {
     const newQuantity = parseInt(item.quantity) - 1;
     const sold = parseInt(item.sold) + 1;
 
-    if (parseInt(item.quantity) > 0) {
-      console.log("in update");
-      axios
-        .put(`http://localhost:5000/updateRestock/${item._id}`, {
-          quantity: newQuantity,
-          sold: sold,
-        })
-        .then((res) => {
-          console.log(res);
+    const updateinventory = async () => {
+      if (parseInt(item.quantity) > 0) {
+        console.log("in update");
+
+        try {
+          const { data } = await axios.put(
+            `http://localhost:5000/updateRestock/${item._id}`,
+            {
+              quantity: newQuantity,
+              sold: sold,
+            }
+          );
+          console.log(data);
+
           setupdateCount(updateCount + 1);
-        })
-        .catch((error) => {
+        } catch (error) {
           console.log(error);
-        });
-    }
+        }
+      }
+    };
+    updateinventory();
   };
   return (
     <div className="mt-5 container">

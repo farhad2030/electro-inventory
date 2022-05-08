@@ -15,9 +15,11 @@ const Topnavbar = () => {
     signOut(auth);
   };
   console.log(user);
+  console.log(user?.displayName);
+  console.log(user?.uid);
   useEffect(() => {
-    setdisplayName([user?.displayName]);
-  }, [loading]);
+    setdisplayName(user?.displayName);
+  }, [loading, user?.displayName]);
 
   return (
     <Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -71,12 +73,16 @@ const Topnavbar = () => {
             ) : (
               <>
                 <Nav.Link>
-                  {user ? displayName : "not fount"}{" "}
-                  <img
-                    src={user?.photoURL}
-                    style={{ width: "20px", borderRadius: "10px" }}
-                    alt="userImg"
-                  />
+                  {displayName ? displayName : ""}
+                  {user?.photoURL ? (
+                    <img
+                      src={user?.photoURL}
+                      style={{ width: "20px", borderRadius: "10px" }}
+                      alt="userImg"
+                    />
+                  ) : (
+                    ""
+                  )}
                 </Nav.Link>
                 <Nav.Link onClick={handelSignout}>
                   Signout <BiLogOutCircle />

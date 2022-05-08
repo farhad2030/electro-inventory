@@ -9,6 +9,7 @@ import {
 } from "react-firebase-hooks/auth";
 import auth from "../../../firebase.init";
 import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = ({ changeAuthUi }) => {
   const fontStyles = { color: "white", fontSize: "40px" };
@@ -37,12 +38,17 @@ const Login = ({ changeAuthUi }) => {
     }
   }, [googleUser, googleError, emailError, emailUser]);
 
-  const handelLogin = (e) => {
+  const handelLogin = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const formDataObj = Object.fromEntries(formData.entries());
     console.log(formDataObj);
-    signInWithEmailAndPassword(formDataObj.email, formDataObj.password);
+    await signInWithEmailAndPassword(formDataObj.email, formDataObj.password);
+    const email = formDataObj.email;
+    const { data } = await axios.post("http://localhost:5000/login", { email });
+    localStorage.setItem("accessToken", data.accessToken);
+
+    navigate(from, { replace: true });
   };
   return (
     <div className="container">
