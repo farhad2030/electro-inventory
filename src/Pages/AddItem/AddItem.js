@@ -21,7 +21,7 @@ const AddItem = () => {
   useEffect(() => {
     if (id) {
       axios
-        .get(`https://radiant-inlet-16077.herokuapp.com//inventory/${id}`)
+        .get(`https://radiant-inlet-16077.herokuapp.com/inventory/${id}`)
         .then((res) => {
           console.log(res.data);
           setinventory(res.data);
@@ -43,13 +43,14 @@ const AddItem = () => {
       if (path === "editInventory") {
         axios
           .put(
-            `https://radiant-inlet-16077.herokuapp.com//updateInventory/${id}`,
+            `https://radiant-inlet-16077.herokuapp.com/updateInventory/${id}`,
             formDataObj
           )
           .then((res) => {
             // console.log(res);
             if (res.statusText == "OK") {
               toast("Data is updated");
+              event.target.reset();
             }
           })
           .catch((error) => {
@@ -59,13 +60,13 @@ const AddItem = () => {
         const addData = { ...formDataObj, email: user.email };
         axios
           .post(
-            "https://radiant-inlet-16077.herokuapp.com//addInventory",
+            "https://radiant-inlet-16077.herokuapp.com/addInventory",
             addData
           )
           .then((res) => {
             console.log(res);
             if (res.data.acknowledged) {
-              // event.target.reset();
+              event.target.reset();
             }
           })
           .catch((error) => {

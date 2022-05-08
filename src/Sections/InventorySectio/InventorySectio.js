@@ -8,7 +8,7 @@ const InventorySectio = () => {
   const [inventory, setinventory] = useState([]);
   useEffect(() => {
     axios
-      .get(`https://radiant-inlet-16077.herokuapp.com//inventory?limit=6`)
+      .get(`https://radiant-inlet-16077.herokuapp.com/inventory?limit=6`)
       .then((res) => {
         console.log(res);
         setinventory(res.data);

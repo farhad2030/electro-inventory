@@ -42,7 +42,7 @@ const Register = ({ changeAuthUi }) => {
     await signInWithGoogle();
     const email = user?.email;
     const { data } = await axios.post(
-      "https://radiant-inlet-16077.herokuapp.com//login",
+      "https://radiant-inlet-16077.herokuapp.com/login",
       {
         email,
       }
@@ -83,7 +83,7 @@ const Register = ({ changeAuthUi }) => {
     );
     const email = formDataObj.email;
     const { data } = await axios.post(
-      "https://radiant-inlet-16077.herokuapp.com//login",
+      "https://radiant-inlet-16077.herokuapp.com/login",
       {
         email,
       }

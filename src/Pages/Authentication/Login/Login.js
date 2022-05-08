@@ -31,7 +31,7 @@ const Login = ({ changeAuthUi }) => {
     await signInWithGoogle();
     const email = user?.email;
     const { data } = await axios.post(
-      "https://radiant-inlet-16077.herokuapp.com//login",
+      "https://radiant-inlet-16077.herokuapp.com/login",
       {
         email,
       }
@@ -56,7 +56,7 @@ const Login = ({ changeAuthUi }) => {
     await signInWithEmailAndPassword(formDataObj.email, formDataObj.password);
     const email = formDataObj.email;
     const { data } = await axios.post(
-      "https://radiant-inlet-16077.herokuapp.com//login",
+      "https://radiant-inlet-16077.herokuapp.com/login",
       { email }
     );
     localStorage.setItem("accessToken", data.accessToken);

@@ -21,7 +21,7 @@ const AllInventory = () => {
   // get inventory
   useEffect(() => {
     axios
-      .get(`https://radiant-inlet-16077.herokuapp.com//inventory`)
+      .get(`https://radiant-inlet-16077.herokuapp.com/inventory`)
       .then((res) => {
         console.log(res);
         setinventory(res.data);
@@ -39,7 +39,7 @@ const AllInventory = () => {
     if (proceed) {
       axios
         .delete(
-          `https://radiant-inlet-16077.herokuapp.com//deleteinventory/${id}`
+          `https://radiant-inlet-16077.herokuapp.com/deleteinventory/${id}`
         )
         .then((res) => {
           console.log(res);
@@ -66,7 +66,7 @@ const AllInventory = () => {
       console.log(newQuantity);
       axios
         .put(
-          `https://radiant-inlet-16077.herokuapp.com//updateRestock/${item._id}`,
+          `https://radiant-inlet-16077.herokuapp.com/updateRestock/${item._id}`,
           {
             quantity: newQuantity,
           }
@@ -89,7 +89,7 @@ const AllInventory = () => {
       console.log("in update");
       axios
         .put(
-          `https://radiant-inlet-16077.herokuapp.com//updateRestock/${item._id}`,
+          `https://radiant-inlet-16077.herokuapp.com/updateRestock/${item._id}`,
           {
             quantity: newQuantity,
           }
