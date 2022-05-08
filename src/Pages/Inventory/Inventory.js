@@ -39,7 +39,7 @@ const Inventory = () => {
             console.log(token);
             const email = user?.email;
             const { data } = await axios.get(
-              `http://localhost:5000/myInventory?email=${email}`,
+              `https://radiant-inlet-16077.herokuapp.com//myInventory?email=${email}`,
               {
                 headers: {
                   authorization: `bearer ${token}`,
@@ -50,7 +50,9 @@ const Inventory = () => {
             setinventory(data);
             seterror("");
           } else {
-            const { data } = await axios.get(`http://localhost:5000/inventory`);
+            const { data } = await axios.get(
+              `https://radiant-inlet-16077.herokuapp.com//inventory`
+            );
             console.log(data);
             seterror("");
             setinventory(data);
@@ -72,7 +74,9 @@ const Inventory = () => {
       const proceed = window.confirm(`Are you sure to delete ${name}`);
       if (proceed) {
         axios
-          .delete(`http://localhost:5000/deleteinventory/${id}`)
+          .delete(
+            `https://radiant-inlet-16077.herokuapp.com//deleteinventory/${id}`
+          )
           .then((res) => {
             console.log(res);
             const remaining = inventory.filter((item) => item._id !== id);

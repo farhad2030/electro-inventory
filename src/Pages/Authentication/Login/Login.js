@@ -30,9 +30,12 @@ const Login = ({ changeAuthUi }) => {
   const handelgooglelogin = async () => {
     await signInWithGoogle();
     const email = user?.email;
-    const { data } = await axios.post("http://localhost:5000/login", {
-      email,
-    });
+    const { data } = await axios.post(
+      "https://radiant-inlet-16077.herokuapp.com//login",
+      {
+        email,
+      }
+    );
     localStorage.setItem("accessToken", data.accessToken);
   };
 
@@ -52,7 +55,10 @@ const Login = ({ changeAuthUi }) => {
     console.log(formDataObj);
     await signInWithEmailAndPassword(formDataObj.email, formDataObj.password);
     const email = formDataObj.email;
-    const { data } = await axios.post("http://localhost:5000/login", { email });
+    const { data } = await axios.post(
+      "https://radiant-inlet-16077.herokuapp.com//login",
+      { email }
+    );
     localStorage.setItem("accessToken", data.accessToken);
   };
   return (
