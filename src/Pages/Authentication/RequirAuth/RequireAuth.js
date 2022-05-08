@@ -8,6 +8,7 @@ const RequireAuth = ({ children }) => {
 
   const location = useLocation();
   console.log(user, location);
+  console.log(user?.providerData[0]?.providerId, user.emailVerified);
   if (!loading) {
     if (!user) {
       return (
@@ -17,6 +18,12 @@ const RequireAuth = ({ children }) => {
           replace
         />
       );
+    }
+    if (
+      user?.providerData[0]?.providerId == "password" &&
+      !user.emailVerified
+    ) {
+      return <Navigate to="/resendEmail" state={{ from: location }} replace />;
     }
   }
   return children;

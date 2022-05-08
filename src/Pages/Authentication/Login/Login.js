@@ -46,7 +46,7 @@ const Login = ({ changeAuthUi }) => {
     await signInWithEmailAndPassword(formDataObj.email, formDataObj.password);
     const email = formDataObj.email;
     const { data } = await axios.post(
-      "https://radiant-inlet-16077.herokuapp.com/login",
+      "https://radiant-inlet-16077.herokuapp.com//login",
       { email }
     );
     localStorage.setItem("accessToken", data.accessToken);
@@ -71,10 +71,15 @@ const Login = ({ changeAuthUi }) => {
             placeholder="Password"
           />
         </Form.Group>
-
-        <Button variant="primary" type="submit">
-          Login
-        </Button>
+        {emailLoading ? (
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        ) : (
+          <Button variant="primary" type="submit">
+            Login
+          </Button>
+        )}
         <p className="my-3">
           Dont have an account , Please{" "}
           <span className="changeAuthPageLink" onClick={changeAuthUi}>
@@ -84,19 +89,31 @@ const Login = ({ changeAuthUi }) => {
         {/* social login */}
         <p>or sign up with:</p>
         <p className="">
+          {googleLoading ? (
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          ) : (
+            <button
+              type="button"
+              className="btn btn-link btn-floating mx-1"
+              onClick={handelgooglelogin}
+            >
+              <FcGoogle style={fontStyles} />
+            </button>
+          )}
+
           <button
             type="button"
-            className="btn btn-link btn-floating mx-1"
-            onClick={handelgooglelogin}
+            className="btn btn-link btn-floating mx-1 disabled"
           >
-            <FcGoogle style={fontStyles} />
-          </button>
-
-          <button type="button" className="btn btn-link btn-floating mx-1">
             <BsFacebook style={fontStyles} />
           </button>
 
-          <button type="button" className="btn btn-link btn-floating mx-1">
+          <button
+            type="button"
+            className="btn btn-link btn-floating mx-1 disabled"
+          >
             <BsGithub style={fontStyles} />
           </button>
         </p>

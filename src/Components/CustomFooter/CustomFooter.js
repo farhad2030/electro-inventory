@@ -10,7 +10,7 @@ const CustomFooter = () => {
   var today = new Date();
   console.log(today.getFullYear());
   return (
-    <div className="pt-5 mt-5 bg-dark customFooter ">
+    <div className="py-5  bg-dark customFooter ">
       <h3>Electro-inventory</h3>
 
       <ul className="footerNavList">

@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { ToastContainer } from "react-toastify";
 import { Route, Routes } from "react-router-dom";
@@ -16,10 +15,10 @@ import Inventory from "./Pages/Inventory/Inventory";
 import RequireAuth from "./Pages/Authentication/RequirAuth/RequireAuth";
 import CustomFooter from "./Components/CustomFooter/CustomFooter";
 import AddItem from "./Pages/AddItem/AddItem";
-import AllInventory from "./Pages/AllInventory/AllInventory";
 import ManageInventory from "./Pages/ManageInventory/ManageInventory";
 import Blog from "./Pages/Blog/Blog";
 import NotFound from "./Pages/NotFound/NotFound";
+import ResendEmail from "./Pages/Authentication/ResendEmail/ResendEmail";
 
 function App() {
   return (
@@ -65,6 +64,7 @@ function App() {
           }
         ></Route>
 
+        <Route path="/resendEmail" element={<ResendEmail />}></Route>
         <Route path="*" element={<NotFound />}></Route>
       </Routes>
 

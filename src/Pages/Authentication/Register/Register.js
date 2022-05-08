@@ -107,9 +107,16 @@ const Register = ({ changeAuthUi }) => {
             />
           </Form.Group>
 
-          <Button variant="primary" type="submit">
-            Register
-          </Button>
+          {!emailLoading ? (
+            <Button variant="primary" type="submit">
+              Register
+            </Button>
+          ) : (
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          )}
+
           <p className="my-3">
             Have an account , Please{" "}
             <span className="changeAuthPageLink" onClick={changeAuthUi}>
@@ -119,21 +126,33 @@ const Register = ({ changeAuthUi }) => {
           {/* social login */}
           <p>or sign up with:</p>
           <p className="">
+            {!googleLoading ? (
+              <button
+                type="button"
+                className="btn btn-link btn-floating mx-1"
+                onClick={() => {
+                  handelgooglelogin();
+                }}
+              >
+                <FcGoogle style={fontStyles} />
+              </button>
+            ) : (
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            )}
+
             <button
               type="button"
-              className="btn btn-link btn-floating mx-1"
-              onClick={() => {
-                handelgooglelogin();
-              }}
+              className="btn btn-link btn-floating mx-1 disabled"
             >
-              <FcGoogle style={fontStyles} />
-            </button>
-
-            <button type="button" className="btn btn-link btn-floating mx-1">
               <BsFacebook style={fontStyles} />
             </button>
 
-            <button type="button" className="btn btn-link btn-floating mx-1">
+            <button
+              type="button"
+              className="btn btn-link btn-floating mx-1 disabled"
+            >
               <BsGithub style={fontStyles} />
             </button>
           </p>

@@ -22,7 +22,14 @@ const Topnavbar = () => {
   }, [loading, user?.displayName]);
 
   return (
-    <Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <Navbar
+      fixed="top"
+      collapseOnSelect
+      expand="lg"
+      bg="dark"
+      variant="dark"
+      style={{ width: "100%" }}
+    >
       <Container>
         <Navbar.Brand as={Link} to="/">
           Electro-inventory

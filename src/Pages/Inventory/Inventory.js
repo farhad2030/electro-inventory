@@ -31,9 +31,9 @@ const Inventory = () => {
       console.log({ email: user?.email });
       let url;
       if (location.state?.from == "myItems") {
-        url = `https://radiant-inlet-16077.herokuapp.com/inventory?email=${user?.email}`;
+        url = `https://radiant-inlet-16077.herokuapp.com//inventory?email=${user?.email}`;
       } else {
-        url = `https://radiant-inlet-16077.herokuapp.com/inventory`;
+        url = `https://radiant-inlet-16077.herokuapp.com//inventory`;
       }
       axios
         .get(url)
@@ -55,7 +55,7 @@ const Inventory = () => {
       if (proceed) {
         axios
           .delete(
-            `https://radiant-inlet-16077.herokuapp.com/deleteinventory/${id}`
+            `https://radiant-inlet-16077.herokuapp.com//deleteinventory/${id}`
           )
           .then((res) => {
             console.log(res);
@@ -82,6 +82,9 @@ const Inventory = () => {
           <button
             className=" btn btn-primary mx-3"
             style={{ cursor: "pointer" }}
+            onClick={() => {
+              navigate("/addItem");
+            }}
           >
             Add new Item
           </button>
