@@ -29,7 +29,7 @@ const InventorySectio = () => {
                 <div key={item._id} className="col-12 col-md-6 col-lg-3  ">
                   <div className="border p-3 rounded ">
                     <h6>{item.name}</h6>
-                    <p>{item.description}</p>
+                    <p>Discription : {item.description}</p>
                     <img src={item.image} style={{ width: "150px" }} />
 
                     <p> Quantity : {item.quantity}</p>
