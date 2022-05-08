@@ -16,11 +16,13 @@ const Inventory = () => {
   // console.log(location);
 
   // react-firebase-hook
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading, userError] = useAuthState(auth);
 
   // store inventory
   const [inventory, setinventory] = useState([]);
   const [remainInventory, setremainInventory] = useState([]);
+
+  const [error, seterror] = useState("");
 
   // for useEffect
   const [updateCount, setupdateCount] = useState(0);
@@ -29,21 +31,37 @@ const Inventory = () => {
   useEffect(() => {
     if (!loading) {
       console.log({ email: user?.email });
-      let url;
-      if (location.state?.from == "myItems") {
-        url = `https://radiant-inlet-16077.herokuapp.com//inventory?email=${user?.email}`;
-      } else {
-        url = `https://radiant-inlet-16077.herokuapp.com//inventory`;
-      }
-      axios
-        .get(url)
-        .then((res) => {
-          console.log(res);
-          setinventory(res.data);
-        })
-        .catch((error) => {
+
+      const getItems = async () => {
+        try {
+          if (location.state?.from == "myItems") {
+            const token = localStorage.getItem("accessToken");
+            console.log(token);
+            const email = user?.email;
+            const { data } = await axios.get(
+              `http://localhost:5000/myInventory?email=${email}`,
+              {
+                headers: {
+                  authorization: `bearer ${token}`,
+                },
+              }
+            );
+            console.log(data);
+            setinventory(data);
+            seterror("");
+          } else {
+            const { data } = await axios.get(`http://localhost:5000/inventory`);
+            console.log(data);
+            seterror("");
+            setinventory(data);
+          }
+        } catch (error) {
           console.log(error);
-        });
+          setinventory([]);
+          seterror(error.message);
+        }
+      };
+      getItems();
     }
   }, [remainInventory, updateCount, location, user, loading]);
 
@@ -54,9 +72,7 @@ const Inventory = () => {
       const proceed = window.confirm(`Are you sure to delete ${name}`);
       if (proceed) {
         axios
-          .delete(
-            `https://radiant-inlet-16077.herokuapp.com//deleteinventory/${id}`
-          )
+          .delete(`http://localhost:5000/deleteinventory/${id}`)
           .then((res) => {
             console.log(res);
             const remaining = inventory.filter((item) => item._id !== id);
@@ -180,6 +196,7 @@ const Inventory = () => {
             })}
           </tbody>
         </table>
+        <p className="text-danger">{error ? error : ""}</p>
       </div>
     </div>
   );

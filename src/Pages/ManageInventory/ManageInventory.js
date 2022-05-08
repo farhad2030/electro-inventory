@@ -27,7 +27,7 @@ const ManageInventory = () => {
         const email = user?.email;
 
         const { data } = await axios.get(
-          `https://radiant-inlet-16077.herokuapp.com//inventory/${id}?email=${email}`,
+          `http://localhost:5000/inventory/${id}?email=${email}`,
           {
             headers: {
               authorization: `bearer ${token}`,
@@ -63,12 +63,9 @@ const ManageInventory = () => {
         parseInt(item.quantity) + parseInt(formDataObj.restock);
       console.log(newQuantity);
       axios
-        .put(
-          `https://radiant-inlet-16077.herokuapp.com//updateRestock/${item._id}`,
-          {
-            quantity: newQuantity,
-          }
-        )
+        .put(`http://localhost:5000/updateRestock/${item._id}`, {
+          quantity: newQuantity,
+        })
         .then((res) => {
           console.log(res);
           setupdateCount(updateCount + 1);
@@ -91,7 +88,7 @@ const ManageInventory = () => {
 
         try {
           const { data } = await axios.put(
-            `https://radiant-inlet-16077.herokuapp.com//updateRestock/${item._id}`,
+            `http://localhost:5000/updateRestock/${item._id}`,
             {
               quantity: newQuantity,
               sold: sold,

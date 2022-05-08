@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { FcGoogle } from "react-icons/fc";
 import { BsFacebook, BsGithub } from "react-icons/bs";
 import {
+  useAuthState,
   useSignInWithEmailAndPassword,
   useSignInWithGoogle,
 } from "react-firebase-hooks/auth";
@@ -23,10 +24,16 @@ const Login = ({ changeAuthUi }) => {
     useSignInWithGoogle(auth);
   const [signInWithEmailAndPassword, emailUser, emailLoading, emailError] =
     useSignInWithEmailAndPassword(auth);
+  const [user, loading, error] = useAuthState(auth);
 
   //  handel google login
   const handelgooglelogin = async () => {
     await signInWithGoogle();
+    const email = user?.email;
+    const { data } = await axios.post("http://localhost:5000/login", {
+      email,
+    });
+    localStorage.setItem("accessToken", data.accessToken);
   };
 
   useEffect(() => {
@@ -45,13 +52,8 @@ const Login = ({ changeAuthUi }) => {
     console.log(formDataObj);
     await signInWithEmailAndPassword(formDataObj.email, formDataObj.password);
     const email = formDataObj.email;
-    const { data } = await axios.post(
-      "https://radiant-inlet-16077.herokuapp.com//login",
-      { email }
-    );
+    const { data } = await axios.post("http://localhost:5000/login", { email });
     localStorage.setItem("accessToken", data.accessToken);
-
-    navigate(from, { replace: true });
   };
   return (
     <div className="container">

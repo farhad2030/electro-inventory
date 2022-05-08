@@ -7,6 +7,7 @@ import { BsFacebook, BsGithub } from "react-icons/bs";
 // auth and firebase hook
 import auth from "../../../firebase.init";
 import {
+  useAuthState,
   useCreateUserWithEmailAndPassword,
   useSignInWithGoogle,
   useUpdateProfile,
@@ -15,6 +16,7 @@ import {
 import "./Register.css";
 import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Register = ({ changeAuthUi }) => {
   // iconstyle
@@ -31,12 +33,18 @@ const Register = ({ changeAuthUi }) => {
   const [createUserWithEmailAndPassword, emailUser, emailLoading, emailError] =
     useCreateUserWithEmailAndPassword(auth);
   const [updateProfile, updating, updateError] = useUpdateProfile(auth);
+  const [user, loading, error] = useAuthState(auth);
 
   const [displayName, setdisplayName] = useState("");
 
   //  handel google login
   const handelgooglelogin = async () => {
     await signInWithGoogle();
+    const email = user?.email;
+    const { data } = await axios.post("http://localhost:5000/login", {
+      email,
+    });
+    localStorage.setItem("accessToken", data.accessToken);
   };
 
   useEffect(() => {
@@ -70,6 +78,11 @@ const Register = ({ changeAuthUi }) => {
       formDataObj.email,
       formDataObj.password
     );
+    const email = formDataObj.email;
+    const { data } = await axios.post("http://localhost:5000/login", {
+      email,
+    });
+    localStorage.setItem("accessToken", data.accessToken);
 
     console.log(emailError);
   };

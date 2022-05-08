@@ -21,7 +21,7 @@ const AllInventory = () => {
   // get inventory
   useEffect(() => {
     axios
-      .get(`https://radiant-inlet-16077.herokuapp.com//inventory`)
+      .get(`http://localhost:5000/inventory`)
       .then((res) => {
         console.log(res);
         setinventory(res.data);
@@ -38,9 +38,7 @@ const AllInventory = () => {
 
     if (proceed) {
       axios
-        .delete(
-          `https://radiant-inlet-16077.herokuapp.com//deleteinventory/${id}`
-        )
+        .delete(`http://localhost:5000/deleteinventory/${id}`)
         .then((res) => {
           console.log(res);
           const remaining = inventory.filter((item) => item._id !== id);
@@ -65,12 +63,9 @@ const AllInventory = () => {
         parseInt(item.quantity) + parseInt(formDataObj.restock);
       console.log(newQuantity);
       axios
-        .put(
-          `https://radiant-inlet-16077.herokuapp.com//updateRestock/${item._id}`,
-          {
-            quantity: newQuantity,
-          }
-        )
+        .put(`http://localhost:5000/updateRestock/${item._id}`, {
+          quantity: newQuantity,
+        })
         .then((res) => {
           console.log(res);
           setupdateCount(updateCount + 1);
@@ -88,12 +83,9 @@ const AllInventory = () => {
     if (parseInt(item.quantity) > 0) {
       console.log("in update");
       axios
-        .put(
-          `https://radiant-inlet-16077.herokuapp.com//updateRestock/${item._id}`,
-          {
-            quantity: newQuantity,
-          }
-        )
+        .put(`http://localhost:5000/updateRestock/${item._id}`, {
+          quantity: newQuantity,
+        })
         .then((res) => {
           console.log(res);
           setupdateCount(updateCount + 1);
